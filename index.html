@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Music Vault</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <!-- 引入图标库（用于收藏、音量图标） -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <h1>My Music Vault</h1>
+        <div class="nav-links">
+            <a href="#playlists">Playlists</a>
+            <a href="#recommendations">Recommendations</a>
+            <a href="#favorites">My Favorites <span id="favorite-count">(0)</span></a>
+        </div>
+    </nav>
+
+    <!-- 歌单板块 -->
+    <section id="playlists" class="section">
+        <h2>My Playlists</h2>
+        <div class="playlist-container">
+            <div class="playlist-card" onclick="showSongs('late-night')">
+                <img src="./images/cover1.png" alt="Late Night Vibes">
+                <h3>Late Night Vibes</h3>
+                <p>12 songs · Soothing & Mellow</p>
+            </div>
+            <div class="playlist-card" onclick="showSongs('indie-folk')">
+                <img src="./images/cover2.png" alt="Indie Folk Gems">
+                <h3>Indie Folk Gems</h3>
+                <p>8 songs · Warm & Acoustic</p>
+            </div>
+            <div class="playlist-card" onclick="showSongs('pop')">
+                <img src="./images/cover3.png" alt="Pop Hits">
+                <h3>Pop Hits</h3>
+                <p>15 songs · Energetic & Catchy</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 歌曲播放板块（含进度条、音量控制、收藏按钮） -->
+    <section id="player" class="section">
+        <h2>Now Playing</h2>
+        <div class="player-card">
+            <img id="current-song-img" src="./images/song-cover.svg" alt="Song Cover">
+            <div class="song-info">
+                <h3 id="current-song-title">Lemon Tree - Fool's Garden</h3>
+                <p id="current-song-desc">Relaxing rhythm, perfect for unwinding</p>
+                <button id="favorite-btn" onclick="toggleFavorite()" class="favorite-btn">
+                    <i class="fa-regular fa-heart"></i> Add to Favorites
+                </button>
+            </div>
+            <div class="player-controls">
+                <button onclick="playPause()">▶️ Play/Pause</button>
+                <!-- 音量控制 -->
+                <div class="volume-container">
+                    <i class="fa-solid fa-volume-up" id="volume-icon"></i>
+                    <input type="range" id="volume-bar" min="0" max="100" value="80" oninput="adjustVolume()">
+                </div>
+                <!-- 播放进度条 -->
+                <div class="progress-container">
+                    <span id="current-time">0:00</span>
+                    <input type="range" id="progress-bar" min="0" max="100" value="0" oninput="setProgress()">
+                    <span id="total-time">3:20</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 音乐推荐板块（含分类筛选） -->
+    <section id="recommendations" class="section">
+        <div class="section-header">
+            <h2>Recommended Tracks</h2>
+            <!-- 分类筛选下拉框 -->
+            <div class="filter-container">
+                <label for="genre-filter">Filter by Genre: </label>
+                <select id="genre-filter" onchange="filterSongsByGenre()">
+                    <option value="all">All Genres</option>
+                    <option value="folk">Folk</option>
+                    <option value="pop">Pop</option>
+                    <option value="indie">Indie</option>
+                    <option value="mellow">Mellow</option>
+                </select>
+            </div>
+        </div>
+        <!-- 带分类标签的歌曲列表 -->
+        <div class="song-list" id="recommended-songs-list">
+            <div class="song-item" data-genre="folk">
+                <div class="song-details" onclick="playSong('Hometown Glory', 'Adele', 'Soft piano, emotional lyrics', 'folk')">
+                    <p>Hometown Glory - Adele</p>
+                    <p>Soft piano, emotional lyrics</p>
+                    <span class="genre-tag">Folk</span>
+                </div>
+                <button class="song-fav-btn" onclick="toggleFavorite('Hometown Glory', 'Adele', 'Soft piano, emotional lyrics')">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <div class="song-item" data-genre="indie">
+                <div class="song-details" onclick="playSong('Skinny Love', 'Bon Iver', 'Haunting melody, gentle vocals', 'indie')">
+                    <p>Skinny Love - Bon Iver</p>
+                    <p>Haunting melody, gentle vocals</p>
+                    <span class="genre-tag">Indie</span>
+                </div>
+                <button class="song-fav-btn" onclick="toggleFavorite('Skinny Love', 'Bon Iver', 'Haunting melody, gentle vocals')">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <div class="song-item" data-genre="pop">
+                <div class="song-details" onclick="playSong('Blinding Lights', 'The Weeknd', 'Upbeat rhythm, 80s vibe', 'pop')">
+                    <p>Blinding Lights - The Weeknd</p>
+                    <p>Upbeat rhythm, 80s vibe</p>
+                    <span class="genre-tag">Pop</span>
+                </div>
+                <button class="song-fav-btn" onclick="toggleFavorite('Blinding Lights', 'The Weeknd', 'Upbeat rhythm, 80s vibe')">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <div class="song-item" data-genre="mellow">
+                <div class="song-details" onclick="playSong('Let Her Go', 'Passenger', 'Mellow tune, reflective lyrics', 'mellow')">
+                    <p>Let Her Go - Passenger</p>
+                    <p>Mellow tune, reflective lyrics</p>
+                    <span class="genre-tag">Mellow</span>
+                </div>
+                <button class="song-fav-btn" onclick="toggleFavorite('Let Her Go', 'Passenger', 'Mellow tune, reflective lyrics')">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 收藏歌曲板块 -->
+    <section id="favorites" class="section">
+        <h2>My Favorite Songs</h2>
+        <div id="favorite-songs-list" class="song-list">
+            <p id="empty-favorite">No favorite songs yet. Add some you love!</p>
+        </div>
+    </section>
+
+    <!-- 可复用 MP3 播放器示例 -->
+    <section id="playlist-player-section" class="section">
+        <h2>Player</h2>
+        <div id="my-player"></div>
+    </section>
+
+    <script src="./js/playlist-player.js"></script>
+    <script>
+      // sample playlist data (remote MP3 examples)
+      const sampleList = [
+        { title: 'Sample Track 1', artist: 'Artist A', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', cover: './images/cover1.png' },
+        { title: 'Sample Track 2', artist: 'Artist B', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', cover: './images/cover2.png' },
+        { title: 'Sample Track 3', artist: 'Artist C', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', cover: './images/cover3.png' }
+      ];
+      try{
+        const player = new PlaylistPlayer('#my-player', { playlist: sampleList });
+        player.render();
+      }catch(e){ console.error('Failed to init PlaylistPlayer', e); }
+    </script>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
