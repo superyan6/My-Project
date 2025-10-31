@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover - My Music Vault</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="app-title">My Music Vault</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="discover.html" class="nav-link active">Discover</a></li>
+                    <li><a href="library.html" class="nav-link">Library</a></li>
+                    <li><a href="player.html" class="nav-link">Now Playing</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <span class="user-name">Music Lover</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <header class="page-header">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search songs, artists or albums" id="search-input">
+                    <button class="search-btn">Search</button>
+                </div>
+                <div class="header-actions">
+                    <button class="action-btn" id="theme-toggle">Theme</button>
+                </div>
+            </header>
+
+            <!-- Genre Tags -->
+            <section class="tags-section">
+                <div class="section-header">
+                    <h2>Browse by Genre</h2>
+                </div>
+                <div class="tags-container" id="tags-container">
+                    <!-- 标签将通过JS动态生成 -->
+                </div>
+            </section>
+
+            <!-- Featured Albums -->
+            <section class="albums-section">
+                <div class="section-header">
+                    <h2>Featured Albums</h2>
+                </div>
+                <div class="albums-grid">
+                    <div class="album-card" data-album-id="1">
+                        <div class="album-cover">
+                            <img src="https://picsum.photos/id/24/300/300" alt="Summer Memories Album Cover">
+                            <div class="play-overlay">
+                                <button class="play-btn play-btn-large" data-album-title="Summer Memories">▶</button>
+                            </div>
+                        </div>
+                        <h3 class="album-title">Summer Memories</h3>
+                        <p class="album-artist">Acoustic Dreams</p>
+                    </div>
+                    <div class="album-card" data-album-id="2">
+                        <div class="album-cover">
+                            <img src="https://picsum.photos/id/25/300/300" alt="Retro Future Album Cover">
+                            <div class="play-overlay">
+                                <button class="play-btn play-btn-large" data-album-title="Retro Future">▶</button>
+                            </div>
+                        </div>
+                        <h3 class="album-title">Retro Future</h3>
+                        <p class="album-artist">Synthwave Collective</p>
+                    </div>
+                    <div class="album-card" data-album-id="3">
+                        <div class="album-cover">
+                            <img src="https://picsum.photos/id/26/300/300" alt="Urban Chill Album Cover">
+                            <div class="play-overlay">
+                                <button class="play-btn play-btn-large" data-album-title="Urban Chill">▶</button>
+                            </div>
+                        </div>
+                        <h3 class="album-title">Urban Chill</h3>
+                        <p class="album-artist">Jazz Ambient</p>
+                    </div>
+                    <div class="album-card" data-album-id="4">
+                        <div class="album-cover">
+                            <img src="https://picsum.photos/id/27/300/300" alt="Meditation Album Cover">
+                            <div class="play-overlay">
+                                <button class="play-btn play-btn-large" data-album-title="Meditation">▶</button>
+                            </div>
+                        </div>
+                        <h3 class="album-title">Meditation</h3>
+                        <p class="album-artist">Nature Sounds</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommended Tracks -->
+            <section class="discover-tracks-section">
+                <div class="section-header">
+                    <h2>Recommended For You</h2>
+                </div>
+                <div class="tracks-list" id="discover-tracks">
+                    <!-- Recommended tracks will be generated dynamically by JS -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Mini Player (fixed at bottom) -->
+    <div class="mini-player">
+        <div class="player-info">
+            <div class="player-cover">
+                <img src="https://picsum.photos/id/24/64/64" alt="Currently Playing" id="mini-player-cover">
+            </div>
+            <div class="player-details">
+                <h4 class="player-title" id="mini-player-title">Summer Breeze</h4>
+                <p class="player-artist" id="mini-player-artist">Eason Chan</p>
+            </div>
+        </div>
+        <div class="player-controls">
+            <button class="control-btn" id="shuffle-btn">🔀</button>
+            <button class="control-btn" id="prev-btn">⏮</button>
+            <button class="control-btn play-btn" id="play-pause-btn">▶</button>
+            <button class="control-btn" id="next-btn">⏭</button>
+            <button class="control-btn" id="repeat-btn">🔁</button>
+        </div>
+        <div class="player-progress">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <span class="time-display" id="current-time">0:00</span>
+            <span class="time-display" id="total-time">0:00</span>
+        </div>
+        <div class="volume-control">
+            <button class="control-btn" id="volume-btn">🔊</button>
+            <div class="volume-slider">
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.7">
+            </div>
+        </div>
+    </div>
+
+    <!-- 音频元素 -->
+    <audio id="audio-player" preload="metadata"></audio>
+
+    <script src="js/script.js"></script>
+    <script src="js/mini-player.js"></script>
+    <script src="js/theme-toggle.js"></script>
+</body>
+</html>

@@ -4,161 +4,211 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Music Vault</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <!-- 引入图标库（用于收藏、音量图标） -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 强制浅色主题，不受缓存影响 */
+        :root {
+            --primary-color: #3498db !important; /* 淡蓝色导航栏 */
+            --secondary-color: #e0e0e0 !important;
+            --text-primary: #121212 !important;
+            --text-secondary: #555555 !important;
+            --background-primary: #ffffff !important;
+            --background-secondary: #f8f9fa !important;
+            --background-card: #ffffff !important;
+            --border-color: #e0e0e0 !important;
+        }
+        
+        /* 确保body背景色为白色 */
+        body {
+            background-color: #ffffff !important;
+            color: #121212 !important;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* 顶部导航栏样式 */
+        .top-nav {
+            background-color: var(--primary-color) !important;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        
+        .top-nav .app-title {
+            color: white;
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        .top-nav .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .top-nav .nav-links li {
+            margin-left: 20px;
+        }
+        
+        .top-nav .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .top-nav .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .top-nav .nav-links a.active {
+            background-color: rgba(255,255,255,0.3);
+        }
+        
+        /* 主内容区域样式 */
+        .main-content {
+            margin-top: 80px; /* 为顶部导航栏留出空间 */
+            padding: 20px;
+            min-height: calc(100vh - 80px);
+        }
+        
+        /* 清除可能的dark-theme设置 */
+        body.dark-theme {
+            background-color: #ffffff !important;
+            color: #121212 !important;
+        }
+        
+        body.dark-theme .top-nav {
+            background-color: var(--primary-color) !important;
+        }
+    </style>
 </head>
 <body>
-    <!-- 导航栏 -->
-    <nav>
-        <h1>My Music Vault</h1>
-        <div class="nav-links">
-            <a href="#playlists">Playlists</a>
-            <a href="#recommendations">Recommendations</a>
-            <a href="#favorites">My Favorites <span id="favorite-count">(0)</span></a>
-        </div>
-    </nav>
+    <!-- 顶部导航栏 -->
+    <header class="top-nav">
+        <h1 class="app-title">My Music Vault</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="page1.html">Discover</a></li>
+                <li><a href="page2.html">Library</a></li>
+                <li><a href="page3.html">Playlists</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <!-- 歌单板块 -->
-    <section id="playlists" class="section">
-        <h2>My Playlists</h2>
-        <div class="playlist-container">
-            <div class="playlist-card" onclick="showSongs('late-night')">
-                <img src="./images/cover1.png" alt="Late Night Vibes">
-                <h3>Late Night Vibes</h3>
-                <p>12 songs · Soothing & Mellow</p>
-            </div>
-            <div class="playlist-card" onclick="showSongs('indie-folk')">
-                <img src="./images/cover2.png" alt="Indie Folk Gems">
-                <h3>Indie Folk Gems</h3>
-                <p>8 songs · Warm & Acoustic</p>
-            </div>
-            <div class="playlist-card" onclick="showSongs('pop')">
-                <img src="./images/cover3.png" alt="Pop Hits">
-                <h3>Pop Hits</h3>
-                <p>15 songs · Energetic & Catchy</p>
-            </div>
-        </div>
-    </section>
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <header class="page-header">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search songs, artists or albums" id="search-input">
+                    <button class="search-btn">Search</button>
+                </div>
+                <div class="header-actions">
+                    <button class="action-btn" id="theme-toggle">Theme</button>
+                </div>
+            </header>
 
-    <!-- 歌曲播放板块（含进度条、音量控制、收藏按钮） -->
-    <section id="player" class="section">
-        <h2>Now Playing</h2>
-        <div class="player-card">
-            <img id="current-song-img" src="./images/song-cover.svg" alt="Song Cover">
-            <div class="song-info">
-                <h3 id="current-song-title">Lemon Tree - Fool's Garden</h3>
-                <p id="current-song-desc">Relaxing rhythm, perfect for unwinding</p>
-                <button id="favorite-btn" onclick="toggleFavorite()" class="favorite-btn">
-                    <i class="fa-regular fa-heart"></i> Add to Favorites
-                </button>
-            </div>
-            <div class="player-controls">
-                <button onclick="playPause()">▶️ Play/Pause</button>
-                <!-- 音量控制 -->
-                <div class="volume-container">
-                    <i class="fa-solid fa-volume-up" id="volume-icon"></i>
-                    <input type="range" id="volume-bar" min="0" max="100" value="80" oninput="adjustVolume()">
+            <!-- Featured Section -->
+            <section class="featured-section">
+                <div class="section-header">
+                    <h2>Featured Track</h2>
+                    <a href="discover.html" class="more-link">View More</a>
                 </div>
-                <!-- 播放进度条 -->
-                <div class="progress-container">
-                    <span id="current-time">0:00</span>
-                    <input type="range" id="progress-bar" min="0" max="100" value="0" oninput="setProgress()">
-                    <span id="total-time">3:20</span>
+                <div class="featured-track">
+                    <div class="featured-cover">
+                        <img src="https://picsum.photos/id/1/300/300" alt="Featured Album Cover" class="featured-image">
+                        <div class="play-overlay">
+                            <button class="play-btn play-btn-large">▶</button>
+                        </div>
+                    </div>
+                    <div class="featured-info">
+                        <span class="featured-tag">Featured</span>
+                        <h3 class="featured-title">Summer Breeze</h3>
+                        <p class="featured-artist">Acoustic Dreams</p>
+                        <p class="featured-desc">A warm summer song that brings you the feeling of gentle breeze.</p>
+                        <div class="featured-actions">
+                            <button class="play-btn">▶</button>
+                            <button class="action-btn">Add to Playlist</button>
+                            <button class="action-btn">Favorite</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- 音乐推荐板块（含分类筛选） -->
-    <section id="recommendations" class="section">
-        <div class="section-header">
-            <h2>Recommended Tracks</h2>
-            <!-- 分类筛选下拉框 -->
-            <div class="filter-container">
-                <label for="genre-filter">Filter by Genre: </label>
-                <select id="genre-filter" onchange="filterSongsByGenre()">
-                    <option value="all">All Genres</option>
-                    <option value="folk">Folk</option>
-                    <option value="pop">Pop</option>
-                    <option value="indie">Indie</option>
-                    <option value="mellow">Mellow</option>
-                </select>
-            </div>
-        </div>
-        <!-- 带分类标签的歌曲列表 -->
-        <div class="song-list" id="recommended-songs-list">
-            <div class="song-item" data-genre="folk">
-                <div class="song-details" onclick="playSong('Hometown Glory', 'Adele', 'Soft piano, emotional lyrics', 'folk')">
-                    <p>Hometown Glory - Adele</p>
-                    <p>Soft piano, emotional lyrics</p>
-                    <span class="genre-tag">Folk</span>
+            <!-- Popular Tracks -->
+            <section class="tracks-section">
+                <div class="section-header">
+                    <h2>Popular Tracks</h2>
                 </div>
-                <button class="song-fav-btn" onclick="toggleFavorite('Hometown Glory', 'Adele', 'Soft piano, emotional lyrics')">
-                    <i class="fa-regular fa-heart"></i>
-                </button>
-            </div>
-            <div class="song-item" data-genre="indie">
-                <div class="song-details" onclick="playSong('Skinny Love', 'Bon Iver', 'Haunting melody, gentle vocals', 'indie')">
-                    <p>Skinny Love - Bon Iver</p>
-                    <p>Haunting melody, gentle vocals</p>
-                    <span class="genre-tag">Indie</span>
+                <div class="tracks-grid" id="tracks-grid">
+                    <!-- Track cards will be generated dynamically by JS -->
                 </div>
-                <button class="song-fav-btn" onclick="toggleFavorite('Skinny Love', 'Bon Iver', 'Haunting melody, gentle vocals')">
-                    <i class="fa-regular fa-heart"></i>
-                </button>
-            </div>
-            <div class="song-item" data-genre="pop">
-                <div class="song-details" onclick="playSong('Blinding Lights', 'The Weeknd', 'Upbeat rhythm, 80s vibe', 'pop')">
-                    <p>Blinding Lights - The Weeknd</p>
-                    <p>Upbeat rhythm, 80s vibe</p>
-                    <span class="genre-tag">Pop</span>
+            </section>
+
+            <!-- Recently Played -->
+            <section class="recent-section">
+                <div class="section-header">
+                    <h2>Recently Played</h2>
                 </div>
-                <button class="song-fav-btn" onclick="toggleFavorite('Blinding Lights', 'The Weeknd', 'Upbeat rhythm, 80s vibe')">
-                    <i class="fa-regular fa-heart"></i>
-                </button>
-            </div>
-            <div class="song-item" data-genre="mellow">
-                <div class="song-details" onclick="playSong('Let Her Go', 'Passenger', 'Mellow tune, reflective lyrics', 'mellow')">
-                    <p>Let Her Go - Passenger</p>
-                    <p>Mellow tune, reflective lyrics</p>
-                    <span class="genre-tag">Mellow</span>
+                <div class="tracks-list" id="recent-tracks">
+                    <!-- Recently played list will be generated dynamically by JS -->
                 </div>
-                <button class="song-fav-btn" onclick="toggleFavorite('Let Her Go', 'Passenger', 'Mellow tune, reflective lyrics')">
-                    <i class="fa-regular fa-heart"></i>
-                </button>
+            </section>
+        </main>
+    </div>
+
+    <!-- Mini Player (fixed at bottom) -->
+    <div class="mini-player">
+        <div class="player-info">
+            <div class="player-cover">
+                <img src="https://picsum.photos/id/1/64/64" alt="Currently Playing" id="mini-player-cover">
+            </div>
+            <div class="player-details">
+                <h4 class="player-title" id="mini-player-title">夏日微风</h4>
+                <p class="player-artist" id="mini-player-artist">陈奕迅</p>
             </div>
         </div>
-    </section>
-
-    <!-- 收藏歌曲板块 -->
-    <section id="favorites" class="section">
-        <h2>My Favorite Songs</h2>
-        <div id="favorite-songs-list" class="song-list">
-            <p id="empty-favorite">No favorite songs yet. Add some you love!</p>
+        <div class="player-controls">
+            <button class="control-btn" id="shuffle-btn">🔀</button>
+            <button class="control-btn" id="prev-btn">⏮</button>
+            <button class="control-btn play-btn" id="play-pause-btn">▶</button>
+            <button class="control-btn" id="next-btn">⏭</button>
+            <button class="control-btn" id="repeat-btn">🔁</button>
         </div>
-    </section>
+        <div class="player-progress">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <span class="time-display" id="current-time">0:00</span>
+            <span class="time-display" id="total-time">0:00</span>
+        </div>
+        <div class="volume-control">
+            <button class="control-btn" id="volume-btn">🔊</button>
+            <div class="volume-slider">
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.7">
+            </div>
+        </div>
+    </div>
 
-    <!-- 可复用 MP3 播放器示例 -->
-    <section id="playlist-player-section" class="section">
-        <h2>Player</h2>
-        <div id="my-player"></div>
-    </section>
+    <!-- 音频元素 -->
+    <audio id="audio-player" preload="metadata"></audio>
 
-    <script src="./js/playlist-player.js"></script>
-    <script>
-      // sample playlist data (remote MP3 examples)
-      const sampleList = [
-        { title: 'Sample Track 1', artist: 'Artist A', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', cover: './images/cover1.png' },
-        { title: 'Sample Track 2', artist: 'Artist B', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', cover: './images/cover2.png' },
-        { title: 'Sample Track 3', artist: 'Artist C', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', cover: './images/cover3.png' }
-      ];
-      try{
-        const player = new PlaylistPlayer('#my-player', { playlist: sampleList });
-        player.render();
-      }catch(e){ console.error('Failed to init PlaylistPlayer', e); }
-    </script>
-
-    <script src="./js/script.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/mini-player.js"></script>
+    <script src="js/theme-toggle.js"></script>
 </body>
 </html>

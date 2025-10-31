@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover - My Music Vault</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 强制浅色主题，不受缓存影响 */
+        :root {
+            --primary-color: #3498db !important; /* 淡蓝色导航栏 */
+            --secondary-color: #e0e0e0 !important;
+            --text-primary: #121212 !important;
+            --text-secondary: #555555 !important;
+            --background-primary: #ffffff !important;
+            --background-secondary: #f8f9fa !important;
+            --background-card: #ffffff !important;
+            --border-color: #e0e0e0 !important;
+        }
+        
+        /* 确保body背景色为白色 */
+        body {
+            background-color: #ffffff !important;
+            color: #121212 !important;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* 顶部导航栏样式 */
+        .top-nav {
+            background-color: var(--primary-color) !important;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+        
+        .top-nav .app-title {
+            color: white;
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        .top-nav .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .top-nav .nav-links li {
+            margin-left: 20px;
+        }
+        
+        .top-nav .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .top-nav .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .top-nav .nav-links a.active {
+            background-color: rgba(255,255,255,0.3);
+        }
+        
+        /* 主内容区域样式 */
+        .main-content {
+            margin-top: 80px; /* 为顶部导航栏留出空间 */
+            padding: 20px;
+            min-height: calc(100vh - 80px);
+        }
+        
+        /* Discover页面特定样式 */
+        .featured-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .section-header h2 {
+            font-size: 28px;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .section-header .more-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .featured-track {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .featured-track .track-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-right: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .featured-track .track-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .featured-track .track-info {
+            flex: 1;
+        }
+        
+        .featured-track .track-title {
+            font-size: 32px;
+            margin: 0 0 10px 0;
+        }
+        
+        .featured-track .track-artist {
+            font-size: 18px;
+            margin: 0 0 20px 0;
+            opacity: 0.9;
+        }
+        
+        .featured-track .play-btn {
+            background-color: white;
+            color: var(--primary-color);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .featured-track .play-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 标签容器样式 */
+        .tags-container {
+            margin-bottom: 30px;
+        }
+        
+        .tags-container h3 {
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            background-color: var(--background-secondary);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* 推荐歌曲列表样式 */
+        .recommended-section h3 {
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        
+        .tracks-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .track-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px;
+        }
+        
+        .track-item:hover {
+            background-color: var(--background-secondary);
+        }
+        
+        .track-item .track-number {
+            margin-right: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .track-item .track-details {
+            flex: 1;
+        }
+        
+        .track-item .track-name {
+            font-weight: 500;
+            margin: 0 0 5px 0;
+            color: var(--text-primary);
+        }
+        
+        .track-item .track-artist-name {
+            font-size: 14px;
+            margin: 0;
+            color: var(--text-secondary);
+        }
+        
+        .track-item .track-duration {
+            color: var(--text-secondary);
+            margin-right: 10px;
+        }
+        
+        .track-item .play-icon {
+            color: var(--primary-color);
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .track-item:hover .play-icon {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="top-nav">
+        <h1 class="app-title">My Music Vault</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="page1.html" class="active">Discover</a></li>
+                <li><a href="page2.html">Library</a></li>
+                <li><a href="page3.html">Playlists</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <!-- 推荐歌曲部分 -->
+        <section class="featured-section">
+            <div class="section-header">
+                <h2>Featured Track</h2>
+            </div>
+            
+            <div class="featured-track">
+                <div class="track-image">
+                    <img src="https://picsum.photos/id/10/300/300" alt="Featured Track Cover">
+                </div>
+                <div class="track-info">
+                    <h3 class="track-title">Summer Vibes</h3>
+                    <p class="track-artist">Acoustic Dreams</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 音乐标签部分 -->
+        <section class="tags-container">
+            <h3>Explore by Genre</h3>
+            <div class="tags">
+                <span class="tag">Pop</span>
+                <span class="tag">Rock</span>
+                <span class="tag">Electronic</span>
+                <span class="tag">Hip Hop</span>
+                <span class="tag">Classical</span>
+                <span class="tag">Jazz</span>
+                <span class="tag">Country</span>
+                <span class="tag">R&B</span>
+            </div>
+        </section>
+
+        <!-- 为你推荐部分 -->
+        <section class="recommended-section">
+            <h3>Recommended for You</h3>
+            <ul class="tracks-list">
+                <li class="track-item">
+                    <span class="track-number">1</span>
+                    <div class="track-details">
+                        <h4 class="track-name">Electric Dreams</h4>
+                        <p class="track-artist-name">Synthwave Collective</p>
+                    </div>
+                    <span class="track-duration">3:55</span>
+                    <span class="play-icon">▶️</span>
+                </li>
+                <li class="track-item">
+                    <span class="track-number">2</span>
+                    <div class="track-details">
+                        <h4 class="track-name">Morning Coffee</h4>
+                        <p class="track-artist-name">Acoustic Sessions</p>
+                    </div>
+                    <span class="track-duration">2:43</span>
+                    <span class="play-icon">▶️</span>
+                </li>
+                <li class="track-item">
+                    <span class="track-number">3</span>
+                    <div class="track-details">
+                        <h4 class="track-name">Midnight City</h4>
+                        <p class="track-artist-name">Luna Echo</p>
+                    </div>
+                    <span class="track-duration">4:12</span>
+                    <span class="play-icon">▶️</span>
+                </li>
+                <li class="track-item">
+                    <span class="track-number">4</span>
+                    <div class="track-details">
+                        <h4 class="track-name">Sunset Boulevard</h4>
+                        <p class="track-artist-name">Jazz Quartet</p>
+                    </div>
+                    <span class="track-duration">3:28</span>
+                    <span class="play-icon">▶️</span>
+                </li>
+                <li class="track-item">
+                    <span class="track-number">5</span>
+                    <div class="track-details">
+                        <h4 class="track-name">Urban Rhythm</h4>
+                        <p class="track-artist-name">City Beats</p>
+                    </div>
+                    <span class="track-duration">3:45</span>
+                    <span class="play-icon">▶️</span>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        // 简单的交互逻辑
+        document.querySelectorAll('.tag').forEach(tag => {
+            tag.addEventListener('click', () => {
+                alert(`Exploring: ${tag.textContent}`);
+            });
+        });
+
+        document.querySelectorAll('.track-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (!e.target.closest('.play-icon')) {
+                    item.querySelector('.play-icon').click();
+                }
+            });
+        });
+
+        document.querySelectorAll('.play-icon').forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const trackName = icon.closest('.track-item').querySelector('.track-name').textContent;
+                alert(`Now playing: ${trackName}`);
+            });
+        });
+    </script>
+
+    <!-- Mini Player (fixed at bottom) -->
+    <div class="mini-player">
+        <div class="player-info">
+            <div class="player-cover">
+                <img src="https://picsum.photos/id/24/64/64" alt="Currently Playing" id="mini-player-cover">
+            </div>
+            <div class="player-details">
+                <h4 class="player-title" id="mini-player-title">Summer Breeze</h4>
+                <p class="player-artist" id="mini-player-artist">Eason Chan</p>
+            </div>
+        </div>
+        <div class="player-controls">
+            <button class="control-btn" id="shuffle-btn">🔀</button>
+            <button class="control-btn" id="prev-btn">⏮</button>
+            <button class="control-btn play-btn" id="play-pause-btn">▶</button>
+            <button class="control-btn" id="next-btn">⏭</button>
+            <button class="control-btn" id="repeat-btn">🔁</button>
+        </div>
+        <div class="player-progress">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <span class="time-display" id="current-time">0:00</span>
+            <span class="time-display" id="total-time">0:00</span>
+        </div>
+        <div class="volume-control">
+            <button class="control-btn" id="volume-btn">🔊</button>
+            <div class="volume-slider">
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.7">
+            </div>
+        </div>
+    </div>
+
+    <!-- 音频元素 -->
+    <audio id="audio-player" preload="metadata"></audio>
+
+    <script src="js/script.js"></script>
+    <script src="js/mini-player.js"></script>
+    <script src="js/theme-toggle.js"></script>
+</body>
+</html>

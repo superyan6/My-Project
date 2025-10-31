@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recently Played - My Music Vault</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <h1>My Music Vault</h1>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="playlists.html">Playlists</a>
+            <a href="recent.html" class="active">Recent Play</a>
+            <a href="recommendations.html">Recommendations</a>
+            <a href="favorites.html">My Favorites</a>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle Dark Mode">🌙</button>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <div class="section-header">
+            <h2>Recently Played</h2>
+        </div>
+        
+        <div class="song-list-section">
+            <div class="list-header">
+                <div>#</div>
+                <div>Title</div>
+                <div>Artist</div>
+                <div>Album</div>
+                <div>Duration</div>
+                <div>Played At</div>
+            </div>
+            
+            <div class="song-list">
+                <div class="song-item">
+                    <div class="song-number">1</div>
+                    <div class="song-title">
+                        <img src="./images/song-cover.svg" alt="Lemon Tree" class="song-cover">
+                        <div>
+                            <h4>Lemon Tree</h4>
+                            <p>Fool's Garden</p>
+                        </div>
+                    </div>
+                    <div class="song-artist">Fool's Garden</div>
+                    <div class="song-album">Dish of the Day</div>
+                    <div class="song-duration">3:07</div>
+                    <div class="song-time">Today, 14:30</div>
+                </div>
+                
+                <div class="song-item">
+                    <div class="song-number">2</div>
+                    <div class="song-title">
+                        <img src="./images/playlist1.svg" alt="Shape of You" class="song-cover">
+                        <div>
+                            <h4>Shape of You</h4>
+                            <p>Ed Sheeran</p>
+                        </div>
+                    </div>
+                    <div class="song-artist">Ed Sheeran</div>
+                    <div class="song-album">÷ (Divide)</div>
+                    <div class="song-duration">3:53</div>
+                    <div class="song-time">Yesterday, 19:45</div>
+                </div>
+                
+                <div class="song-item">
+                    <div class="song-number">3</div>
+                    <div class="song-title">
+                        <img src="./images/playlist2.svg" alt="Blinding Lights" class="song-cover">
+                        <div>
+                            <h4>Blinding Lights</h4>
+                            <p>The Weeknd</p>
+                        </div>
+                    </div>
+                    <div class="song-artist">The Weeknd</div>
+                    <div class="song-album">After Hours</div>
+                    <div class="song-duration">3:20</div>
+                    <div class="song-time">Yesterday, 16:20</div>
+                </div>
+                
+                <div class="song-item">
+                    <div class="song-number">4</div>
+                    <div class="song-title">
+                        <img src="./images/playlist3.svg" alt="Dance Monkey" class="song-cover">
+                        <div>
+                            <h4>Dance Monkey</h4>
+                            <p>Tones and I</p>
+                        </div>
+                    </div>
+                    <div class="song-artist">Tones and I</div>
+                    <div class="song-album">The Kids Are Coming</div>
+                    <div class="song-duration">3:29</div>
+                    <div class="song-time">2 days ago</div>
+                </div>
+                
+                <div class="song-item">
+                    <div class="song-number">5</div>
+                    <div class="song-title">
+                        <img src="./images/song-cover.svg" alt="Someone You Loved" class="song-cover">
+                        <div>
+                            <h4>Someone You Loved</h4>
+                            <p>Lewis Capaldi</p>
+                        </div>
+                    </div>
+                    <div class="song-artist">Lewis Capaldi</div>
+                    <div class="song-album">Divinely Uninspired to a Hellish Extent</div>
+                    <div class="song-duration">3:02</div>
+                    <div class="song-time">2 days ago</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部迷你播放器 -->
+    <div id="mini-player-container" class="mini-player"></div>
+
+    <script src="./js/theme-toggle.js" type="module"></script>
+    <script src="./js/mini-player.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化主题切换
+            import('./js/theme-toggle.js').then(module => {
+                module.setupThemeToggle();
+            });
+            
+            // 初始化迷你播放器
+            if (typeof initMiniPlayer === 'function') {
+                try {
+                    initMiniPlayer('#mini-player-container');
+                } catch (e) {
+                    console.error('Failed to initialize mini player:', e);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

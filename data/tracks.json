@@ -1,0 +1,84 @@
+{
+  "tracks": [
+    {
+      "id": 1,
+      "title": "夏日微风",
+      "artist": "陈奕迅",
+      "album": "夏日限定",
+      "duration": "245",
+      "coverImagePath": "images/cover1.png",
+      "audioPath": "audio/lemon-tree.mp3",
+      "tags": ["流行", "夏日", "舒缓"]
+    },
+    {
+      "id": 2,
+      "title": "夜的第七章",
+      "artist": "周杰伦",
+      "album": "十一月的萧邦",
+      "duration": "320",
+      "coverImagePath": "images/cover2.png",
+      "audioPath": "audio/lemon-tree.mp3",
+      "tags": ["华语", "经典", "叙事"]
+    },
+    {
+      "id": 3,
+      "title": "起风了",
+      "artist": "买辣椒也用券",
+      "album": "起风了",
+      "duration": "310",
+      "coverImagePath": "images/cover3.png",
+      "audioPath": "audio/lemon-tree.mp3",
+      "tags": ["流行", "治愈", "抒情"]
+    },
+    {
+      "id": 4,
+      "title": "Shape of You",
+      "artist": "Ed Sheeran",
+      "album": "÷ (Divide)",
+      "duration": "233",
+      "coverImagePath": "images/song-cover.svg",
+      "audioPath": "audio/lemon-tree.mp3",
+      "tags": ["欧美", "流行", "舞曲"]
+    },
+    {
+      "id": 5,
+      "title": "光年之外",
+      "artist": "邓紫棋",
+      "album": "光年之外",
+      "duration": "245",
+      "coverImagePath": "images/cover1.png",
+      "audioPath": "audio/lemon-tree.mp3",
+      "tags": ["华语", "流行", "科幻"]
+    },
+    {
+      "id": 6,
+      "title": "告白气球",
+      "artist": "周杰伦",
+      "album": "周杰伦的床边故事",
+      "duration": "235",
+      "coverImagePath": "images/cover2.png",
+      "audioPath": "audio/lemon-tree.mp3",
+      "tags": ["华语", "流行", "浪漫"]
+    },
+    {
+      "id": 7,
+      "title": "光年之外",
+      "artist": "邓紫棋",
+      "album": "光年之外",
+      "duration": "245",
+      "coverImagePath": "images/cover3.png",
+      "audioPath": "audio/lemon-tree.mp3",
+      "tags": ["华语", "流行", "抒情"]
+    },
+    {
+      "id": 8,
+      "title": "Lemon Tree",
+      "artist": "Fool's Garden",
+      "album": "Dish of the Day",
+      "duration": "245",
+      "coverImagePath": "images/song-cover.svg",
+      "audioPath": "audio/lemon-tree.mp3",
+      "tags": ["欧美", "经典", "轻快"]
+    }
+  ]
+}

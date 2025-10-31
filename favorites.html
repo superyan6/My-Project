@@ -1,1 +1,235 @@
-hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorites - My Music Vault</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <h1>My Music Vault</h1>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="playlists.html">Playlists</a>
+            <a href="recent.html">Recent Play</a>
+            <a href="recommendations.html">Recommendations</a>
+            <a href="favorites.html" class="active">My Favorites</a>
+        </div>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+
+    <!-- 收藏歌曲板块 -->
+    <section class="hero-section">
+        <h2>My Favorite Songs</h2>
+        <p>Your personal collection of loved tracks</p>
+        <div id="favorite-songs-list" class="song-list">
+            <p id="empty-favorite">No favorite songs yet. Add some you love!</p>
+        </div>
+    </section>
+
+    <!-- 歌曲播放板块 -->
+    <section class="mini-player-section">
+        <h3>Now Playing</h3>
+        <div class="player-card">
+            <img id="current-song-img" src="./images/song-cover.svg" alt="Song Cover">
+            <div class="song-info">
+                <h3 id="current-song-title">Lemon Tree - Fool's Garden</h3>
+                <p id="current-song-desc">Relaxing rhythm, perfect for unwinding</p>
+                <button id="favorite-btn" onclick="toggleFavorite()" class="favorite-btn">
+                    <i class="fa-regular fa-heart"></i> Add to Favorites
+                </button>
+            </div>
+            <div class="player-controls">
+                <button onclick="playPause()">▶️ Play/Pause</button>
+                <!-- 音量控制 -->
+                <div class="volume-container">
+                    <i class="fa-solid fa-volume-up" id="volume-icon"></i>
+                    <input type="range" id="volume-bar" min="0" max="100" value="80" oninput="adjustVolume()">
+                </div>
+                <!-- 播放进度条 -->
+                <div class="progress-container">
+                    <span id="current-time">0:00</span>
+                    <input type="range" id="progress-bar" min="0" max="100" value="0" oninput="setProgress()">
+                    <span id="total-time">3:20</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/theme-toggle.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setupThemeToggle();
+            
+            // 从本地存储获取收藏歌曲
+            function getFavoriteSongs() {
+                const favorites = localStorage.getItem('favoriteSongs');
+                return favorites ? JSON.parse(favorites) : [];
+            }
+
+            // 保存收藏歌曲到本地存储
+            function saveFavoriteSongs(favorites) {
+                localStorage.setItem('favoriteSongs', JSON.stringify(favorites));
+            }
+
+            // 渲染收藏歌曲列表
+            function renderFavoriteSongs() {
+                const favorites = getFavoriteSongs();
+                const favoriteList = document.getElementById('favorite-songs-list');
+                const emptyMessage = document.getElementById('empty-favorite');
+                
+                // 清空列表
+                while (favoriteList.firstChild) {
+                    favoriteList.removeChild(favoriteList.firstChild);
+                }
+                
+                // 如果没有收藏歌曲，显示空状态
+                if (favorites.length === 0) {
+                    const emptyP = document.createElement('p');
+                    emptyP.id = 'empty-favorite';
+                    emptyP.textContent = 'No favorite songs yet. Add some you love!';
+                    favoriteList.appendChild(emptyP);
+                } else {
+                    // 渲染收藏歌曲
+                    favorites.forEach((song, index) => {
+                        const songItem = document.createElement('div');
+                        songItem.className = 'song-item';
+                        
+                        const songDetails = document.createElement('div');
+                        songDetails.className = 'song-details';
+                        songDetails.onclick = () => playSong(song.title, song.artist, song.description);
+                        
+                        const titleP = document.createElement('p');
+                        titleP.textContent = `${song.title} - ${song.artist}`;
+                        
+                        const descP = document.createElement('p');
+                        descP.textContent = song.description;
+                        
+                        const removeBtn = document.createElement('button');
+                        removeBtn.className = 'song-fav-btn';
+                        removeBtn.innerHTML = '<i class="fa-solid fa-heart"></i>';
+                        removeBtn.onclick = (e) => {
+                            e.stopPropagation(); // 阻止冒泡
+                            removeFromFavorites(index);
+                        };
+                        
+                        songDetails.appendChild(titleP);
+                        songDetails.appendChild(descP);
+                        songItem.appendChild(songDetails);
+                        songItem.appendChild(removeBtn);
+                        favoriteList.appendChild(songItem);
+                    });
+                }
+            }
+
+            // 从收藏中移除歌曲
+            function removeFromFavorites(index) {
+                const favorites = getFavoriteSongs();
+                const removedSong = favorites.splice(index, 1)[0];
+                saveFavoriteSongs(favorites);
+                renderFavoriteSongs();
+                alert(`Removed from favorites: ${removedSong.title} - ${removedSong.artist}`);
+            }
+
+            // 播放歌曲
+            function playSong(title, artist, description) {
+                document.getElementById('current-song-title').textContent = `${title} - ${artist}`;
+                document.getElementById('current-song-desc').textContent = description;
+                
+                console.log(`Playing: ${title} - ${artist}`);
+            }
+
+            // 切换收藏状态
+            function toggleFavorite() {
+                const title = document.getElementById('current-song-title').textContent;
+                const [songTitle, artist] = title.split(' - ');
+                const description = document.getElementById('current-song-desc').textContent;
+                
+                const favorites = getFavoriteSongs();
+                const songIndex = favorites.findIndex(song => song.title === songTitle && song.artist === artist);
+                
+                if (songIndex === -1) {
+                    favorites.push({ title: songTitle, artist, description });
+                    alert(`Added to favorites: ${songTitle} - ${artist}`);
+                } else {
+                    favorites.splice(songIndex, 1);
+                    alert(`Removed from favorites: ${songTitle} - ${artist}`);
+                }
+                
+                saveFavoriteSongs(favorites);
+                renderFavoriteSongs();
+            }
+
+            // 音量控制
+            function adjustVolume() {
+                const volume = document.getElementById('volume-bar').value;
+                console.log(`Volume adjusted to: ${volume}%`);
+                const volumeIcon = document.getElementById('volume-icon');
+                if (volume == 0) {
+                    volumeIcon.className = 'fa-solid fa-volume-mute';
+                } else if (volume < 50) {
+                    volumeIcon.className = 'fa-solid fa-volume-low';
+                } else {
+                    volumeIcon.className = 'fa-solid fa-volume-up';
+                }
+            }
+
+            // 播放暂停
+            function playPause() {
+                console.log('Play/Pause toggled');
+            }
+
+            // 设置播放进度
+            function setProgress() {
+                const progress = document.getElementById('progress-bar').value;
+                console.log(`Progress set to: ${progress}%`);
+            }
+
+            // 页面加载时渲染收藏歌曲
+            renderFavoriteSongs();
+        });
+    </script>
+    
+    <!-- 迷你播放器 -->
+    <div id="mini-player">
+        <div class="player-content">
+            <div class="player-info">
+                <div class="song-info">
+                    <h4 id="now-playing-title">Song Title</h4>
+                    <p id="now-playing-artist">Artist</p>
+                </div>
+            </div>
+            
+            <div class="player-controls">
+                <button id="shuffle-btn" class="control-btn">🔀</button>
+                <button id="prev-btn" class="control-btn">⏮️</button>
+                <button id="play-pause-btn" class="control-btn play-btn">▶️</button>
+                <button id="next-btn" class="control-btn">⏭️</button>
+                <button id="repeat-btn" class="control-btn">🔁</button>
+            </div>
+            
+            <div class="player-progress">
+                <span id="current-time">0:00</span>
+                <input type="range" id="progress-bar" min="0" max="100" value="0">
+                <span id="total-time">0:00</span>
+            </div>
+            
+            <div class="volume-control">
+                <button id="volume-btn" class="control-btn">🔊</button>
+                <input type="range" id="volume-slider" min="0" max="100" value="80">
+            </div>
+        </div>
+    </div>
+    
+    <!-- 音频元素 -->
+    <audio id="audio-player" preload="metadata"></audio>
+    
+    <script src="js/script.js"></script>
+    <script src="js/mini-player.js"></script>
+</body>
+</html>
