@@ -1,0 +1,102 @@
+[
+  {
+    "id": "t01",
+    "title": "Juile",
+    "artist": "未知艺术家",
+    "album": "未知专辑",
+    "duration": "3:00",
+    "coverImagePath": "images/cover1.png",
+    "audioPath": "mp3/Juile.mp3",
+    "tags": ["Pop"]
+  },
+  {
+    "id": "t02",
+    "title": "Payphone",
+    "artist": "Maroon 5 / Wiz Khalifa",
+    "album": "Payphone",
+    "duration": "3:51",
+    "coverImagePath": "images/cover2.png",
+    "audioPath": "mp3/payphone.mp3",
+    "tags": ["Pop", "Rock"]
+  },
+  {
+    "id": "t03",
+    "title": "天天 (Close To You)",
+    "artist": "陶喆",
+    "album": "I'm OK",
+    "duration": "4:12",
+    "coverImagePath": "images/cover3.png",
+    "audioPath": "mp3/天天.mp3",
+    "tags": ["Mandarin", "R&B"]
+  },
+  {
+    "id": "t04",
+    "title": "We Don't Talk Anymore",
+    "artist": "Charlie Puth / Selena Gomez",
+    "album": "Nine Track Mind (Deluxe Edition)",
+    "duration": "3:37",
+    "coverImagePath": "images/picture1.jpg",
+    "audioPath": "mp3/we don't talk anymore.mp3",
+    "tags": ["Pop", "Electronic"]
+  },
+  {
+    "id": "t05",
+    "title": "Nothing On You",
+    "artist": "B.o.B / Bruno Mars",
+    "album": "Essential R&B - Summer 2010",
+    "duration": "4:20",
+    "coverImagePath": "images/picture2.jpg",
+    "audioPath": "mp3/nothing on you.mp3",
+    "tags": ["Pop", "R&B"]
+  },
+  {
+    "id": "t06",
+    "title": "Ride It",
+    "artist": "Jay Sean",
+    "album": "All Or Nothing",
+    "duration": "3:28",
+    "coverImagePath": "images/picture3.jpg",
+    "audioPath": "mp3/ride it.mp3",
+    "tags": ["Pop", "R&B"]
+  },
+  {
+    "id": "t07",
+    "title": "到时说爱我",
+    "artist": "茜拉",
+    "album": "心旅",
+    "duration": "3:58",
+    "coverImagePath": "images/default-cover.png",
+    "audioPath": "mp3/茜拉 - 到时说爱我.mp3",
+    "tags": ["Mandarin", "Pop"]
+  },
+  {
+    "id": "t08",
+    "title": "我知道 - 你啊你啊(稍带伴奏)",
+    "artist": "未知歌手",
+    "album": "未知专辑",
+    "duration": "3:30",
+    "coverImagePath": "images/default-cover.png",
+    "audioPath": "mp3/that girl.mp3",
+    "tags": ["Mandarin", "Instrumental"]
+  },
+  {
+    "id": "t09",
+    "title": "Lemon Tree (柠檬树)",
+    "artist": "Fool's Garden",
+    "album": "Dish of the Day",
+    "duration": "3:18",
+    "coverImagePath": "images/song-cover.svg",
+    "audioPath": "mp3/lemon-tree.mp3",
+    "tags": ["Pop", "Acoustic"]
+  },
+  {
+    "id": "t10",
+    "title": "That Girl",
+    "artist": "Olly Murs",
+    "album": "24 Hrs",
+    "duration": "3:23",
+    "coverImagePath": "images/song-cover.svg",
+    "audioPath": "mp3/that girl.mp3",
+    "tags": ["Pop", "Dance"]
+  }
+]
