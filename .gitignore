@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+npm-debug.log
+package-lock.json
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build files
+build/
+dist/
+
+# Log files
+logs/
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Audio files (if you don't want to commit large audio files)
+# Uncomment below if needed
+# mp3/*
+# !mp3/sample-track.mp3
+
+# Editor directories and files
+.project
+.settings/
+.classpath
