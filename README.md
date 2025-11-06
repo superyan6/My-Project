@@ -1,127 +1,131 @@
-# My Music Vault - 音乐流媒体网站
+# My Music Vault
 
-![My Music Vault Logo](images/logo.png)
+A modern, interactive web-based music player application that provides a seamless music listening experience with a clean interface and powerful features.
 
-## 项目简介
+## Table of Contents
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Audio Files](#audio-files)
+- [Cover Images](#cover-images)
+- [License](#license)
 
-My Music Vault 是一个现代化的音乐流媒体网站，提供流畅的音乐播放体验、个性化推荐和完整的音乐库管理功能。网站采用深色主题设计，界面简洁优雅，同时支持响应式布局，在各种设备上都能提供出色的用户体验。
+## Features
 
-## 功能特性
+### Core Player Functionality
+- 🎵 Music playback with play/pause, next/previous track controls
+- 🔊 Volume control with mute functionality
+- ⏱️ Progress bar with time display
+- 📱 Mini-player that stays accessible across the website
 
-- 🎵 **完整的音频播放控制**：播放/暂停、上一曲/下一曲、进度条拖动、音量控制
-- 🔄 **多种播放模式**：顺序播放、循环播放、随机播放
-- 🌟 **收藏功能**：收藏喜爱的歌曲并保存到本地存储
-- 🔍 **强大的搜索功能**：按歌名、歌手、专辑或标签搜索
-- 📱 **响应式设计**：完美适配桌面、平板和移动设备
-- 🌓 **主题切换**：支持深色和浅色主题切换
-- 🎯 **智能推荐**：基于播放历史的个性化推荐
-- 📊 **完整的音乐库管理**：歌单创建、专辑浏览、最近播放记录
+### Advanced Features
+- 🔄 Multiple playback modes: normal, shuffle, and repeat (single track or entire playlist)
+- 📋 Accessible playlist panel
+- ❤️ Favorite songs functionality
+- 🎨 Visual feedback with album cover animations
+- 💾 Playback state persistence using localStorage
 
-## 技术栈
+### User Experience
+- 📱 Responsive design for various screen sizes
+- 🎨 Modern and clean user interface
+- 🔄 Smooth transitions and animations
+- 🎯 Intuitive controls and navigation
 
-- **HTML5**：语义化标签，多媒体支持
-- **CSS3**：现代样式，响应式设计，动画效果
-- **JavaScript (ES6+)**：模块化代码，本地存储，音频控制
-- **JSON**：本地数据源，歌曲元数据管理
-- **Font Awesome**：图标库
-- **本地音频文件**：MP3格式音频播放
-
-## 项目结构
+## Project Structure
 
 ```
 My-Project/
-├── index.html         # 首页
-├── discover.html      # 发现音乐页面
-├── library.html       # 我的音乐页面
-├── player.html        # 正在播放页面
-├── recent.html        # 最近播放页面（额外）
-├── favorites.html     # 我的收藏页面（额外）
-├── css/
-│   └── style.css      # 主样式文件
-├── js/
-│   └── script.js      # 主JavaScript文件
-├── images/            # 图片资源
-│   ├── cover1.jpg     # 专辑封面1
-│   ├── cover2.jpg     # 专辑封面2
-│   ├── playlist1.jpg  # 歌单封面1
-│   └── ...            # 其他图片资源
-├── audio/             # 音频文件
-│   └── lemon-tree.mp3 # 示例音频文件
-└── data/
-    └── tracks.json    # 歌曲元数据JSON
+├── css/                # Stylesheets
+│   ├── components.css  # Reusable UI components
+│   ├── mini-player.css # Mini-player specific styles
+│   └── style.css       # Main stylesheet
+├── data/
+│   └── tracks.json     # Music track metadata
+├── images/             # Image assets
+│   ├── default-cover.png # Default album cover
+│   └── various cover images
+├── js/                 # JavaScript files
+│   ├── app.js          # Main application logic
+│   ├── data-loader.js  # Data loading utilities
+│   ├── mini-player.js  # Mini-player implementation
+│   ├── player.js       # Main player functionality
+│   └── volume-control.js # Volume control module
+├── mp3/                # Audio files
+├── index.html          # Main page
+├── favorites.html      # Favorite tracks page
+├── recent.html         # Recently played tracks page
+└── recommendations.html # Recommended tracks page
 ```
 
-## 快速开始
+## Technologies Used
 
-### 运行项目
+- **Frontend Framework**: Pure JavaScript (No framework dependency)
+- **HTML5**: Modern markup for semantic structure
+- **CSS3**: Styling with animations and transitions
+- **JavaScript**: Interactive functionality and player logic
+- **Web Audio API**: Audio playback and control
+- **LocalStorage**: State persistence
+- **JSON**: Data storage format for track information
 
-1. 确保您的计算机已安装Web浏览器（推荐Chrome、Firefox、Safari或Edge）
-2. 使用本地静态服务器运行项目：
+## Getting Started
 
-   **方法一：使用VS Code的Live Server扩展**
-   - 安装VS Code
-   - 安装Live Server扩展
-   - 打开项目文件夹
-   - 右键点击`index.html`，选择"Open with Live Server"
+To run this project locally:
 
-   **方法二：使用Python内置服务器**
-   - 打开终端
-   - 导航到项目目录
-   - 运行以下命令：
-     ```
-     # Python 3.x
-     python -m http.server
-     ```
-   - 在浏览器中访问 http://localhost:8000
+1. Clone or download the repository to your local machine
+2. Ensure you have a web server running (can use simple servers like Python's http.server or VSCode Live Server)
+3. Open the project directory in your web server
+4. Navigate to `index.html` in your browser
 
-### 本地音频文件
+### Using Python's built-in server (for quick testing)
 
-本项目使用本地音频文件。为了获得最佳体验，请将您的音频文件放在`audio/`目录下，并在`data/tracks.json`中正确配置音频路径。
+```bash
+cd My-Project
+python -m http.server 8000
+```
 
-> **注意**：示例音频文件仅用于演示，实际使用时请替换为您拥有版权的音频文件。
+Then open your browser and go to `http://localhost:8000`
 
-## 功能使用说明
+## Usage
 
-### 播放控制
-- **播放/暂停**：点击播放按钮切换播放状态
-- **上一曲/下一曲**：点击相应按钮切换歌曲
-- **进度条**：点击进度条任意位置跳转到相应时间点
-- **音量控制**：拖动音量滑块调整音量
-- **播放模式**：点击模式按钮切换顺序、循环或随机播放
+### Basic Controls
+- **Play/Pause**: Click the play button to start or pause playback
+- **Next/Previous**: Navigate between tracks
+- **Progress Bar**: Click anywhere on the progress bar to seek to that position in the track
+- **Volume Control**: Adjust volume using the slider or mute button
 
-### 音乐库管理
-- **搜索**：在搜索框中输入关键词查找歌曲
-- **收藏歌曲**：点击心形图标收藏/取消收藏
-- **创建歌单**：在"我的音乐"页面点击"创建新歌单"
-- **查看历史**：在侧边栏点击"最近播放"查看播放历史
+### Advanced Usage
+- **Playback Modes**: Toggle between normal, shuffle, and repeat modes
+- **Playlist**: Open the playlist panel to see all available tracks
+- **Favorites**: Mark tracks as favorites to access them quickly
+- **Navigation**: Use the menu to access different sections (Favorites, Recent, Recommendations)
 
-### 主题与设置
-- **主题切换**：点击顶部的主题按钮切换深色/浅色模式
-- **侧边栏控制**：在移动设备上点击汉堡菜单按钮显示/隐藏侧边栏
+## Audio Files
 
-## 浏览器兼容性
+The application uses audio files stored in the `mp3/` directory. Track information is stored in `data/tracks.json` with the following structure:
 
-本项目支持以下现代浏览器：
-- Chrome (最新版本)
-- Firefox (最新版本)
-- Safari (最新版本)
-- Edge (最新版本)
+```json
+{
+  "id": "t01",
+  "title": "Song Title",
+  "artist": "Artist Name",
+  "album": "Album Name",
+  "duration": 240,
+  "coverImagePath": "images/cover1.png",
+  "audioPath": "mp3/song.mp3",
+  "tags": ["pop", "rock"]
+}
+```
 
-## 版权信息
+## Cover Images
 
-- **音频文件**：项目中的示例音频文件仅用于演示。实际使用时，请确保您拥有所使用音频文件的版权或使用无版权限制的音乐。
-- **图片资源**：示例图片仅用于界面展示。生产环境中请替换为您自己的图片资源。
+Album cover images are stored in the `images/` directory. A default cover image (`default-cover.png`) is used when no specific cover is available.
 
-## 许可证
+## License
 
-本项目仅供学习和演示目的。使用时请遵守相关法律法规，特别是关于音乐版权的规定。
-
-## 贡献
-
-欢迎提交问题报告和功能建议！
+This project is intended for educational purposes. Feel free to modify and use the code as needed for your own projects.
 
 ---
 
-**项目描述（用于提交到 webproject.lrock.net）**：
-
-My Music Vault 是一个现代化的前端静态音乐流媒体网站，采用深色主题设计，提供完整的音乐播放体验。项目使用纯HTML/CSS/JavaScript开发，无需后端支持，通过本地JSON文件存储歌曲元数据，本地音频文件提供播放源。网站包含四个主要页面：首页展示推荐内容和热门歌曲，发现页面提供按标签过滤的歌曲发现功能，我的音乐页面管理歌单和本地音乐，以及正在播放页面提供完整的播放控制和歌曲详情。项目实现了响应式设计，支持桌面和移动设备，包含播放/暂停、进度控制、音量调节、收藏功能、搜索功能和主题切换等核心功能，并使用localStorage保存用户偏好和播放历史。整体界面简洁优雅，动画过渡流畅，为用户提供沉浸式的音乐欣赏体验。
+Created with ❤️ for music lovers everywhere!
