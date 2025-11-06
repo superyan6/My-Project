@@ -148,6 +148,7 @@ function cacheDomElements() {
     dom.themeToggle = document.querySelector('.theme-toggle');
     dom.sidebarToggle = document.querySelector('.sidebar-toggle');
     dom.sidebar = document.querySelector('.sidebar');
+    dom.hamburgerMenu = document.getElementById('hamburgerMenu');
 }
 
 // 加载应用数据
@@ -389,6 +390,19 @@ function bindEventListeners() {
     
     // 侧边栏切换事件
     if (dom.sidebarToggle) dom.sidebarToggle.addEventListener('click', toggleSidebar);
+    
+    // 汉堡菜单切换事件（移动端）
+    if (dom.hamburgerMenu) {
+        dom.hamburgerMenu.addEventListener('click', toggleSidebar);
+        // 添加点击侧边栏外部时关闭侧边栏的功能
+        document.addEventListener('click', (e) => {
+            if (dom.sidebar && dom.sidebar.classList.contains('active') && 
+                !dom.sidebar.contains(e.target) && 
+                !dom.hamburgerMenu.contains(e.target)) {
+                toggleSidebar();
+            }
+        });
+    }
     
     // 点击歌曲列表项播放歌曲
     document.addEventListener('click', (e) => {

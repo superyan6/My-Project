@@ -190,6 +190,8 @@ window.updateMiniPlayerUI = function(track) {
     updateProgress();
 };
 
+// 播放历史功能已集成到saveAudioState函数中
+
 // 保存音频播放状态到localStorage
 function saveAudioState(audioElement, track) {
     try {
@@ -207,42 +209,37 @@ function saveAudioState(audioElement, track) {
         
         // 如果有歌曲信息，单独保存到播放历史中
         if (track && track.id) {
-            saveToPlayHistory(track);
+            try {
+                // 获取现有的播放历史
+                let playHistory = JSON.parse(localStorage.getItem('miniPlayerPlayHistory') || '[]');
+                
+                // 移除已存在的相同歌曲（避免重复）
+                playHistory = playHistory.filter(item => item.id !== track.id);
+                
+                // 添加到历史记录开头
+                playHistory.unshift({
+                    id: track.id,
+                    title: track.title,
+                    artist: track.artist,
+                    coverImagePath: track.coverImagePath,
+                    audioPath: track.audioPath,
+                    duration: track.duration,
+                    playedAt: Date.now()
+                });
+                
+                // 限制历史记录长度（最多保存50首）
+                if (playHistory.length > 50) {
+                    playHistory = playHistory.slice(0, 50);
+                }
+                
+                // 保存到localStorage
+                localStorage.setItem('miniPlayerPlayHistory', JSON.stringify(playHistory));
+            } catch (e) {
+                console.error('保存播放历史失败:', e);
+            }
         }
     } catch (e) {
         console.error('保存音频状态失败:', e);
-    }
-}
-
-// 保存歌曲到播放历史
-function saveToPlayHistory(track) {
-    try {
-        // 获取现有的播放历史
-        let playHistory = JSON.parse(localStorage.getItem('miniPlayerPlayHistory') || '[]');
-        
-        // 移除已存在的相同歌曲（避免重复）
-        playHistory = playHistory.filter(item => item.id !== track.id);
-        
-        // 添加到历史记录开头
-        playHistory.unshift({
-            id: track.id,
-            title: track.title,
-            artist: track.artist,
-            coverImagePath: track.coverImagePath,
-            audioPath: track.audioPath,
-            duration: track.duration,
-            playedAt: Date.now()
-        });
-        
-        // 限制历史记录长度（最多保存50首）
-        if (playHistory.length > 50) {
-            playHistory = playHistory.slice(0, 50);
-        }
-        
-        // 保存到localStorage
-        localStorage.setItem('miniPlayerPlayHistory', JSON.stringify(playHistory));
-    } catch (e) {
-        console.error('保存播放历史失败:', e);
     }
 }
 
@@ -792,7 +789,6 @@ window.togglePlaylistPanel = togglePlaylistPanel;
 window.updatePlaylistItems = updatePlaylistItems;
 window.togglePlayMode = togglePlayMode;
 window.updatePlayModeButton = updatePlayModeButton;
-window.saveToPlayHistory = saveToPlayHistory;
 
 // 页面加载完成后自动初始化迷你播放器
 if (document.readyState === 'loading') {
