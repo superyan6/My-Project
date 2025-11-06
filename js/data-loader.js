@@ -32,7 +32,7 @@ class DataLoader {
       this.loadPromise = new Promise(async (resolve, reject) => {
         try {
           // 从JSON文件加载数据
-          const response = await fetch('data/tracks.json');
+          const response = await fetch('./data/tracks.json');
           
           if (!response.ok) {
             throw new Error(`HTTP错误! 状态: ${response.status}`);
@@ -78,7 +78,7 @@ class DataLoader {
         artist: track.artist || '未知艺术家',
         album: track.album || '未知专辑',
         duration: track.duration || '0:00',
-        coverImagePath: track.coverImagePath || 'images/default-cover.png',
+        coverImagePath: track.coverImagePath || './images/default-cover.png',
         audioPath: track.audioPath || '',
         tags: Array.isArray(track.tags) ? track.tags : [],
         // 添加一些额外的计算字段
@@ -220,8 +220,8 @@ class DataLoader {
         artist: '测试艺术家 1',
         album: '测试专辑 1',
         duration: '3:45',
-        coverImagePath: 'images/cover1.png',
-        audioPath: 'audio/lemon-tree.mp3',
+        coverImagePath: './images/cover1.png',
+        audioPath: './mp3/lemon-tree.mp3',
         tags: ['测试', '流行']
       },
       {
@@ -230,8 +230,8 @@ class DataLoader {
         artist: '测试艺术家 2',
         album: '测试专辑 2',
         duration: '4:12',
-        coverImagePath: 'images/cover2.png',
-        audioPath: 'audio/lemon-tree.mp3',
+        coverImagePath: './images/cover2.png',
+        audioPath: './mp3/lemon-tree.mp3',
         tags: ['测试', '摇滚']
       }
     ];
