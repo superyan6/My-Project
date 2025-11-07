@@ -334,7 +334,7 @@ class App {
         const title = cardWithData.dataset.title;
         const artist = cardWithData.dataset.artist || 'Unknown Artist';
         const src = cardWithData.dataset.src;
-        const cover = cardWithData.dataset.cover || 'images/picture1.jpg';
+        const cover = cardWithData.dataset.cover || './images/picture1.jpg';
         
         // 如果有播放器实例，使用播放器实例播放
         if (this.player && typeof this.player.playTrack === 'function') {
@@ -460,7 +460,7 @@ class App {
         
         if (titleEl) titleEl.textContent = firstTrack.title || '未知歌曲';
         if (artistEl) artistEl.textContent = firstTrack.artist || '未知艺术家';
-        if (coverEl) coverEl.src = firstTrack.coverImagePath || firstTrack.cover || 'images/picture1.jpg';
+        if (coverEl) coverEl.src = firstTrack.coverImagePath || firstTrack.cover || './images/picture1.jpg';
         if (playBtn) playBtn.innerHTML = '<i class="fas fa-pause"></i>';
         
         // 确保底部播放栏可见
@@ -796,7 +796,7 @@ class App {
     if (miniPlayerTitle) miniPlayerTitle.textContent = track.title || '未知标题';
     if (miniPlayerArtist) miniPlayerArtist.textContent = track.artist || '未知艺术家';
     if (miniPlayerCover) {
-      miniPlayerCover.src = track.coverImagePath || 'images/default-cover.png';
+      miniPlayerCover.src = track.coverImagePath || './images/default-cover.png';
       miniPlayerCover.alt = `${track.title || '未知标题'} - ${track.artist || '未知艺术家'}`;
     }
     
@@ -804,7 +804,7 @@ class App {
     if (fullPlayerTitle) fullPlayerTitle.textContent = track.title || '未知标题';
     if (fullPlayerArtist) fullPlayerArtist.textContent = track.artist || '未知艺术家';
     if (fullPlayerCover) {
-      fullPlayerCover.src = track.coverImagePath || 'images/default-cover.png';
+      fullPlayerCover.src = track.coverImagePath || './images/default-cover.png';
       fullPlayerCover.alt = `${track.title || '未知标题'} - ${track.artist || '未知艺术家'}`;
     }
   }
@@ -823,7 +823,7 @@ class App {
       
       if (titleEl) titleEl.textContent = track.title || '未知歌曲';
       if (artistEl) artistEl.textContent = track.artist || '未知艺术家';
-      if (coverEl) coverEl.src = track.coverImagePath || track.cover || 'images/picture1.jpg';
+      if (coverEl) coverEl.src = track.coverImagePath || track.cover || './images/picture1.jpg';
       
       // 更新播放按钮状态
       if (playBtn) {
@@ -1312,8 +1312,8 @@ class App {
         artist: "Electronic Dreams",
         album: "Digital Horizons",
         duration: "3:45",
-        coverImagePath: "images/cover1.png",
-        audioPath: "audio/lemon-tree.mp3",
+        coverImagePath: "./images/cover1.png",
+              audioPath: "./mp3/lemon-tree.mp3",
         tags: ["Electronic", "Ambient"]
       },
       {
@@ -1322,8 +1322,8 @@ class App {
         artist: "Acoustic Waves",
         album: "Nature Sounds",
         duration: "4:12",
-        coverImagePath: "images/cover2.png",
-        audioPath: "audio/lemon-tree.mp3",
+        coverImagePath: "./images/cover2.png",
+              audioPath: "./mp3/lemon-tree.mp3",
         tags: ["Acoustic", "Folk"]
       },
       {
@@ -1332,8 +1332,8 @@ class App {
         artist: "City Beats",
         album: "Metropolitan",
         duration: "3:28",
-        coverImagePath: "images/cover3.png",
-        audioPath: "audio/lemon-tree.mp3",
+        coverImagePath: "./images/cover3.png",
+              audioPath: "./mp3/lemon-tree.mp3",
         tags: ["Hip Hop", "Rap"]
       },
       {
@@ -1342,8 +1342,8 @@ class App {
         artist: "Nature Sounds",
         album: "Relaxation",
         duration: "5:30",
-        coverImagePath: "images/picture1.jpg",
-        audioPath: "audio/lemon-tree.mp3",
+        coverImagePath: "./images/picture1.jpg",
+              audioPath: "./mp3/lemon-tree.mp3",
         tags: ["Ambient", "Relaxation"]
       }
     ];

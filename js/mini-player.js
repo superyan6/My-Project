@@ -218,7 +218,7 @@ class MiniPlayer {
                 });
                 
                 // 查找封面图片路径的优先级顺序
-                const coverSrc = track.coverUrl || track.coverPath || track.coverImagePath || 'images/default-cover.png';
+                const coverSrc = track.coverUrl || track.coverPath || track.coverImagePath || './images/default-cover.png';
                 console.log('Using cover image:', coverSrc);
                 
                 // 更新所有找到的封面元素
@@ -230,7 +230,7 @@ class MiniPlayer {
                         element.onerror = () => {
                             // 当封面图加载失败时使用默认封面
                             console.log('Cover image failed to load, using default');
-                            element.src = 'images/default-cover.png';
+                            element.src = './images/default-cover.png';
                         };
                         
                         // 确保元素可见
@@ -723,7 +723,7 @@ class MiniPlayer {
             }
             
             // 如果没有全局播放器的曲目，尝试从JSON文件加载
-            const response = await fetch('data/tracks.json');
+            const response = await fetch('./data/tracks.json');
             if (!response.ok) throw new Error('Network response was not ok');
             this.tracks = await response.json();
             
@@ -737,10 +737,10 @@ class MiniPlayer {
                 album: track.album || '未知专辑',
                 duration: track.duration || 0,
                 audioPath: track.audioPath || track.url || '',
-                coverImagePath: track.coverImagePath || track.coverPath || track.coverUrl || 'images/default-cover.png',
+                coverImagePath: track.coverImagePath || track.coverPath || track.coverUrl || './images/default-cover.png',
                 // 兼容两种属性名
                 url: track.audioPath || track.url || '',
-                coverUrl: track.coverImagePath || track.coverPath || track.coverUrl || 'images/default-cover.png'
+                coverUrl: track.coverImagePath || track.coverPath || track.coverUrl || './images/default-cover.png'
             }));
             
             // 初始化原始索引
@@ -767,11 +767,11 @@ class MiniPlayer {
                     title: "Lemon Tree",
                     artist: "Fool's Garden",
                     album: "Dish of the Day",
-                    audioPath: "mp3/lemon-tree.mp3",
-                    coverPath: "images/default-cover.png",
-                    coverImagePath: "images/default-cover.png",
-                    url: "mp3/lemon-tree.mp3",
-                    coverUrl: "images/default-cover.png"
+                    audioPath: "./mp3/lemon-tree.mp3",
+                      coverPath: "./images/default-cover.png",
+                      coverImagePath: "./images/default-cover.png",
+                      url: "./mp3/lemon-tree.mp3",
+                      coverUrl: "./images/default-cover.png"
                 }
             ];
             
