@@ -1,0 +1,76 @@
+/* === Layout Fix Patch: 防止双滚动条与底部空白 === */ 
+ 
+ /* 整体页面设定 */ 
+ html, body { 
+   height: 100%; 
+   margin: 0; 
+   padding: 0; 
+   overflow: hidden; /* 禁止双层滚动条 */ 
+   background-color: #121212; 
+ } 
+ 
+ /* 外层容器统一为 Flex 布局 */ 
+ .app-container { 
+   display: flex; 
+   height: 100vh; 
+   overflow: hidden; 
+   background-color: #121212; 
+ } 
+ 
+ /* 左侧导航栏固定 */ 
+ .sidebar { 
+   width: 240px; 
+   background-color: #181818; 
+   height: 100vh; 
+   position: fixed; 
+   left: 0; 
+   top: 0; 
+   bottom: 0; 
+   overflow-y: auto; 
+ } 
+ 
+ /* 主内容区右侧 */ 
+ .main-content { 
+   flex: 1; 
+   margin-left: 240px; /* 避开 sidebar */ 
+   overflow-y: auto; 
+   overflow-x: hidden; 
+   padding: 20px 24px; 
+   padding-bottom: 120px; /* 留出播放器空间 */ 
+   box-sizing: border-box; 
+   min-height: 100vh; 
+ } 
+ 
+ /* 修复底部播放器位置固定 */ 
+ .bottom-player { 
+   position: fixed; 
+   left: 0; 
+   bottom: 0; 
+   width: 100%; 
+   z-index: 100; 
+   background-color: #181818; 
+   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.4); 
+ } 
+ 
+ /* 防止内容遮挡播放器 */ 
+ .content-wrapper, 
+ .main-section, 
+ .song-list, 
+ .track-list { 
+   margin-bottom: 100px; /* 与播放器高度匹配 */ 
+ } 
+ 
+ /* 移动端优化 */ 
+ @media (max-width: 768px) { 
+   .sidebar { 
+     position: fixed; 
+     left: -240px; 
+     transition: left 0.3s ease; 
+   } 
+   .sidebar.active { 
+     left: 0; 
+   } 
+   .main-content { 
+     margin-left: 0; 
+   } 
+ }
