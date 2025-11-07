@@ -1,89 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Vault - Discussion</title>
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        body {
-            background-color: #111;
-            color: #eee;
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music Vault - Discussion</title>
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background-color: #121212;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      margin: 0;
+    }
 
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            padding: 40px;
-            align-items: center;
-            text-align: center;
-        }
+    .main-content {
+      flex: 1;
+      padding: 40px;
+    }
 
-        .discussion-container {
-            max-width: 900px;
-            width: 100%;
-            margin-top: 30px;
-            background: #1b1b1b;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
-        }
+    .discussion-container {
+      background: #1e1e1e;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
 
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: #fff;
-        }
+    h1 {
+      color: #fff;
+      margin-bottom: 10px;
+    }
 
-        p {
-            color: #ccc;
-            font-size: 1rem;
-        }
+    p.subtitle {
+      color: #aaa;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
 
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            color: #777;
-            font-size: 0.9rem;
-        }
-
-        .giscus {
-            margin-top: 20px;
-        }
-    </style>
+    /* Giscus comment section */
+    .giscus-frame {
+      width: 100%;
+      border: none;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <div class="main-content">
-        <h1>Music Discussion Zone</h1>
-        <p>Share your favorite songs, discover new music, and chat with other listeners.</p>
-
-        <section class="discussion-container">
-            <!-- Giscus Discussion Embed -->
-            <script src="https://giscus.app/client.js"
-                data-repo="superyan6/My-Project"
-                data-repo-id="R_kgDOQJ-ubg"  
-                data-category="General"
-                data-category-id="DIC_kwDOQJ-ubs4Cxi1h" 
-                data-mapping="pathname"
-                data-strict="0"
-                data-reactions-enabled="1"
-                data-emit-metadata="0"
-                data-input-position="bottom"
-                data-theme="dark"
-                data-lang="en"
-                crossorigin="anonymous"
-                async>
-            </script>
-        </section>
-
-        <footer>
-            <p>© 2025 Music Vault. All rights reserved.</p>
-        </footer>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2 class="app-logo">Music Vault</h2>
     </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="favorites.html">Favorites</a>
+      <a href="recent.html">Recent</a>
+      <a href="recommendations.html">Recommendations</a>
+      <a href="discussion.html" class="active">Discussion</a>
+    </nav>
+  </div>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <div class="discussion-container">
+      <h1>Music Discussion Zone</h1>
+      <p class="subtitle">Share your favorite songs, discover new music, and chat with other listeners.</p>
+
+      <!-- Giscus -->
+      <script src="https://giscus.app/client.js"
+        data-repo="superyan6/My-Project"
+        data-repo-id="R_kgD0QJ-ubg"
+        data-category="General"
+        data-category-id="DIC_kwDOQJ-ubs4Cx1ih"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="dark"
+        crossorigin="anonymous"
+        async>
+      </script>
+    </div>
+  </div>
 </body>
 </html>
-
