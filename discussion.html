@@ -1,29 +1,113 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Music Vault - Discussion</title>
-  <link rel="stylesheet" href="css/common.css" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/mini-player.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/common.css">
+  <!-- 确保在移动设备上有更好的触控体验 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#181818">
+  <style>
+    /* 移动设备触摸优化 */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    button {
+      touch-action: manipulation;
+    }
+    
+    /* Netease Cloud Music Style */
+    :root {
+      --primary-color: #d32f2f;
+      --secondary-color: #333;
+      --background-color: #121212;
+      --card-background: #181818;
+      --card-hover: #282828;
+      --text-primary: #fff;
+      --text-secondary: #b3b3b3;
+      --border-color: #282828;
+      --header-height: 64px;
+      --sidebar-width: 240px;
+    }
+
+    body {
+      background-color: var(--background-color);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    
+    .discussion-container {
+      background-color: var(--card-background);
+      border-radius: 8px;
+      padding: 24px;
+      margin-top: 24px;
+    }
+  </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h2>My Music Vault</h2>
-    <ul>
-      <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
-      <li><a href="favorites.html"><i class="fa fa-heart"></i> My Favorites</a></li>
-      <li><a href="recent.html"><i class="fa fa-history"></i> Recently Played</a></li>
-      <li><a href="recommendations.html"><i class="fa fa-music"></i> Recommendations</a></li>
-      <li class="active"><a href="discussion.html"><i class="fa fa-comments"></i> Discussion</a></li>
-    </ul>
-  </div>
+  <div class="app-container">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="app-logo">Music Vault</div>
+      </div>
+      <nav class="sidebar-nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">
+              <span class="nav-icon"><i class="fas fa-home"></i></span>
+              Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="favorites.html" class="nav-link">
+              <span class="nav-icon"><i class="fas fa-heart"></i></span>
+              My Favorites
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="recent.html" class="nav-link">
+              <span class="nav-icon"><i class="fas fa-history"></i></span>
+              Recently Played
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="recommendations.html" class="nav-link">
+              <span class="nav-icon"><i class="fas fa-compass"></i></span>
+              Recommendations
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a href="discussion.html" class="nav-link">
+              <span class="nav-icon"><i class="fas fa-comments"></i></span>
+              Discussion
+            </a>
+          </li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="avatar">JD</div>
+          <span class="username">John Doe</span>
+        </div>
+      </div>
+    </div>
 
-  <div class="main-content">
-    <header>
-      <h1>🎧 音乐讨论区</h1>
-      <p>分享你喜欢的歌曲、推荐新音乐、与其他听众互动！</p>
-    </header>
+    <div class="main-content">
+      <header>
+        <h1>🎧 Music Discussion</h1>
+        <p>Share your favorite songs, recommend new music, and interact with other listeners!</p>
+      </header>
 
     <section class="discussion-container">
       <!-- 嵌入 Giscus 评论系统 -->
@@ -42,15 +126,16 @@
       </script>
       <noscript>请启用 JavaScript 以查看讨论区。</noscript>
     </section>
+    </div>
   </div>
 
-  <footer class="player-bar">
+  <div class="mini-player">
     <div class="player-controls">
       <button id="prev">⏮</button>
       <button id="play">▶</button>
       <button id="next">⏭</button>
     </div>
     <div class="progress-bar"></div>
-  </footer>
+  </div>
 </body>
 </html>
