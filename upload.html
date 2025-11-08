@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Vault - Upload</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* 确保与其他页面保持一致的样式 */
+    :root {
+      --primary-color: #d32f2f;
+      --secondary-color: #333;
+      --background-color: #121212;
+      --card-background: #181818;
+      --card-hover: #282828;
+      --text-primary: #fff;
+      --text-secondary: #b3b3b3;
+      --border-color: #282828;
+      --header-height: 64px;
+      --sidebar-width: 240px;
+    }
+
+    body {
+      background-color: var(--background-color);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: #000;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
+      padding: 20px 24px;
+    }
+
+    .app-logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 20px 0;
+    }
+
+    .nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-item {
+      margin: 4px 0;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 24px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+      background-color: var(--card-hover);
+      color: var(--text-primary);
+    }
+
+    .nav-item.active .nav-link {
+      background-color: var(--card-hover);
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .nav-icon {
+      font-size: 20px;
+      width: 24px;
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .username {
+      font-size: 14px;
+    }
+
+    /* Main Content Styles */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .top-bar {
+      height: var(--header-height);
+      background-color: rgba(18, 18, 18, 0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .content-wrapper {
+      flex: 1;
+      padding: 32px;
+      overflow-y: auto;
+      background-color: var(--background-color);
+    }
+
+    .upload-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .upload-header {
+      margin-bottom: 32px;
+    }
+
+    .upload-header h1 {
+      font-size: 32px;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .upload-header p {
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    /* Upload Box Styles */
+    .upload-box {
+      background-color: var(--card-background);
+      border: 2px dashed var(--border-color);
+      border-radius: 12px;
+      padding: 48px 32px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      margin-bottom: 32px;
+    }
+
+    .upload-box:hover {
+      border-color: var(--primary-color);
+      background-color: var(--card-hover);
+    }
+
+    .upload-icon {
+      font-size: 48px;
+      color: var(--primary-color);
+      margin-bottom: 16px;
+    }
+
+    .upload-box h2 {
+      margin-bottom: 8px;
+      color: var(--text-primary);
+      font-size: 20px;
+    }
+
+    .upload-box p {
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .upload-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 24px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .upload-btn:hover {
+      transform: scale(1.05);
+      background-color: #b71c1c;
+    }
+
+    #file-input {
+      display: none;
+    }
+
+    /* Uploaded Files List */
+    .files-section {
+      margin-top: 32px;
+    }
+
+    .files-section h2 {
+      font-size: 24px;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .files-list {
+      background-color: var(--card-background);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .file-item {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background-color 0.3s ease;
+    }
+
+    .file-item:last-child {
+      border-bottom: none;
+    }
+
+    .file-item:hover {
+      background-color: var(--card-hover);
+    }
+
+    .file-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .file-icon {
+      font-size: 24px;
+      color: var(--primary-color);
+    }
+
+    .file-name {
+      font-size: 16px;
+      color: var(--text-primary);
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .file-player {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Audio Player Styling */
+    audio {
+      background-color: var(--card-background);
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+    }
+
+    audio::-webkit-media-controls {
+      background-color: var(--card-background);
+    }
+
+    audio::-webkit-media-controls-play-button {
+      color: var(--primary-color);
+    }
+
+    /* Empty State */
+    .empty-state {
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--text-secondary);
+    }
+
+    .empty-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      :root {
+        --sidebar-width: 200px;
+      }
+
+      .file-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .file-name {
+        max-width: 200px;
+      }
+
+      .file-player {
+        width: 100%;
+      }
+
+      audio {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="app-logo">My Music Vault</div>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="index.html" class="nav-link">
+            <span class="nav-icon"><i class="fas fa-home"></i></span>
+            Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="favorites.html" class="nav-link">
+            <span class="nav-icon"><i class="fas fa-heart"></i></span>
+            My Favorites
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="recent.html" class="nav-link">
+            <span class="nav-icon"><i class="fas fa-history"></i></span>
+            Recently Played
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="recommendations.html" class="nav-link">
+            <span class="nav-icon"><i class="fas fa-compass"></i></span>
+            Recommendations
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="discussion.html" class="nav-link">
+            <span class="nav-icon"><i class="fas fa-comments"></i></span>
+            Discussion
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a href="upload.html" class="nav-link">
+            <span class="nav-icon"><i class="fas fa-upload"></i></span>
+            Upload
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <div class="user-profile">
+        <div class="avatar">JD</div>
+        <span class="username">John Doe</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <h1 style="margin: 0; font-size: 20px;">Upload Your Music</h1>
+    </div>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+      <div class="upload-container">
+        <!-- Upload Box -->
+        <div class="upload-box" onclick="document.getElementById('file-input').click();">
+          <div class="upload-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <h2>Upload Your Music</h2>
+          <p>Drag and drop your audio files here or click to browse</p>
+          <p>Supports MP3 and WAV formats</p>
+          <button class="upload-btn" onclick="document.getElementById('file-input').click();">
+            Select Files
+          </button>
+          <input type="file" id="file-input" accept=".mp3,.wav" multiple onchange="handleFiles(this.files);">
+        </div>
+
+        <!-- Uploaded Files List -->
+        <div class="files-section">
+          <h2>Your Uploaded Files</h2>
+          <div class="files-list" id="files-list">
+            <div class="empty-state" id="empty-state">
+              <div class="empty-icon">
+                <i class="fas fa-music"></i>
+              </div>
+              <p>No files uploaded yet. Upload your first audio file!</p>
+            </div>
+            <!-- File items will be inserted here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // 从localStorage加载已上传的文件
+    const uploadedFiles = JSON.parse(localStorage.getItem('uploadedAudioFiles')) || [];
+
+    // 页面加载时显示已上传的文件
+    document.addEventListener('DOMContentLoaded', () => {
+      displayUploadedFiles();
+      setupDragAndDrop();
+    });
+
+    // 处理文件选择
+    function handleFiles(files) {
+      if (files.length === 0) return;
+
+      Array.from(files).forEach(file => {
+        // 检查文件类型
+        if (!file.type.match('audio/mp3') && !file.type.match('audio/wav') && !file.name.endsWith('.mp3') && !file.name.endsWith('.wav')) {
+          alert('Please upload only MP3 or WAV files.');
+          return;
+        }
+
+        // 创建文件URL（仅在浏览器会话中有效）
+        const fileURL = URL.createObjectURL(file);
+        
+        // 创建文件对象
+        const audioFile = {
+          id: Date.now() + Math.random().toString(36).substr(2, 9), // 唯一ID
+          name: file.name,
+          type: file.type,
+          size: file.size,
+          lastModified: file.lastModified,
+          fileURL: fileURL
+        };
+
+        // 添加到数组
+        uploadedFiles.push(audioFile);
+        
+        // 保存到localStorage
+        saveToLocalStorage();
+      });
+
+      // 更新显示
+      displayUploadedFiles();
+    }
+
+    // 显示已上传的文件
+    function displayUploadedFiles() {
+      const filesList = document.getElementById('files-list');
+      const emptyState = document.getElementById('empty-state');
+
+      // 清空列表
+      while (filesList.firstChild) {
+        if (filesList.firstChild.id === 'empty-state') {
+          break;
+        }
+        filesList.removeChild(filesList.firstChild);
+      }
+
+      // 检查是否有文件
+      if (uploadedFiles.length === 0) {
+        emptyState.style.display = 'block';
+      } else {
+        emptyState.style.display = 'none';
+        
+        // 添加文件项
+        uploadedFiles.forEach(file => {
+          const fileItem = document.createElement('div');
+          fileItem.className = 'file-item';
+          fileItem.dataset.id = file.id;
+
+          fileItem.innerHTML = `
+            <div class="file-info">
+              <div class="file-icon">
+                <i class="fas fa-file-audio"></i>
+              </div>
+              <div class="file-name">${file.name}</div>
+            </div>
+            <div class="file-player">
+              <audio controls>
+                <source src="${file.fileURL}" type="${file.type || 'audio/mpeg'}">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          `;
+
+          filesList.appendChild(fileItem);
+        });
+      }
+    }
+
+    // 保存到localStorage
+    function saveToLocalStorage() {
+      // 只保存必要信息，不保存fileURL（因为它是临时的）
+      const filesToSave = uploadedFiles.map(file => ({
+        id: file.id,
+        name: file.name,
+        type: file.type,
+        size: file.size,
+        lastModified: file.lastModified
+      }));
+      localStorage.setItem('uploadedAudioFiles', JSON.stringify(filesToSave));
+    }
+
+    // 设置拖放功能
+    function setupDragAndDrop() {
+      const uploadBox = document.querySelector('.upload-box');
+
+      uploadBox.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadBox.style.borderColor = 'var(--primary-color)';
+      });
+
+      uploadBox.addEventListener('dragleave', () => {
+        uploadBox.style.borderColor = 'var(--border-color)';
+      });
+
+      uploadBox.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadBox.style.borderColor = 'var(--border-color)';
+        
+        if (e.dataTransfer.files.length) {
+          handleFiles(e.dataTransfer.files);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
